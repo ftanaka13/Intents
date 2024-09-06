@@ -1,6 +1,7 @@
 package br.com.faculdadeimpacta.intents
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,22 @@ class SecondActivity : AppCompatActivity() {
         super.onStart()
         binding.buttonMainActivity.setOnClickListener {
             startActivity(Intent(baseContext, MainActivity::class.java))
+        }
+
+        binding.buttonMessage.setOnClickListener {
+            val intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, "Olá")
+            }
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+            }
+        }
+
+        binding.buttonWeb.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com"))
+            startActivity(intent)
         }
     }
 }
